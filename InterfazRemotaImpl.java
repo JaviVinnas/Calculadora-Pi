@@ -15,18 +15,26 @@ public class InterfazRemotaImpl extends UnicastRemoteObject implements InterfazR
         return "Hola, " + name;
     }
 
-    @Override
-    public long puntosQueCumplenDesigualdad(long numPuntos) {
-        long ptosValidos = 0;
-        for (long i = 0; i < numPuntos; i += 1) {
-            Punto punto = new Punto();
-            //verificamos la desigualdad
-            if (punto.getX()*punto.getX() + punto.getY()*punto.getY() <= 1.0) {
-                ptosValidos+=1;
-            }
 
+    
+    @Override
+    public long puntosQueCumplenDesigualdad(long numPuntos, int numHilos) throws RemoteException {
+        Thread[] hilos = new Thread[numHilos];
+
+        Resultado resultado = new Resultado();
+
+        for (int i = 0; i < numHilos; i+=1){
+            hilos[i] = new Thread(new Calculo(resultado, numPuntos/numHilos));
+            hilos[i].start();
         }
-        return ptosValidos;
+
+        try {
+            for (int i = 0; i < numHilos; i += 1) {
+                hilos[i].join();
+            }
+        }catch (InterruptedException ignore){}
+
+        return resultado.getNum();
     }
 
 }

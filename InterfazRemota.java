@@ -19,6 +19,6 @@ public interface InterfazRemota extends Remote {
      * @return cantidad de puntos de los generados que caen en una circunferencia de
      *         radio 1
      */
-    public long puntosQueCumplenDesigualdad(long numPuntos) throws java.rmi.RemoteException;
+    public long puntosQueCumplenDesigualdad(long numPuntos, int numHilos) throws java.rmi.RemoteException;
 
 }
