@@ -17,6 +17,13 @@ public class MainCliente {
             InterfazRemota h = (InterfazRemota) Naming.lookup(registryURL);
             System.out.println("Chequeo completado");
             System.out.println("Comprobación: " + h.sayHello("Pepe"));
+            while (true) {
+                System.out.print("Introduce el numero de puntos a calcular: ");
+                long numPuntos = Long.parseLong(br.readLine());
+                long puntosValidos = h.puntosQueCumplenDesigualdad(numPuntos);
+                System.out.println("De los " + numPuntos + " puntos, " + puntosValidos + "han cumplido la regla");
+                System.out.println("Aproximación de PI -> " + (4.0*puntosValidos/numPuntos));
+            }
         } catch (Exception x) {
             System.out.println("Excepción en MainCliente: " + x);
         }
