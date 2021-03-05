@@ -15,7 +15,6 @@ public class InterfazRemotaImpl extends UnicastRemoteObject implements InterfazR
         return "Hola, " + name;
     }
 
-
     
     @Override
     public long puntosQueCumplenDesigualdad(long numPuntos, int numHilos) throws RemoteException {
@@ -23,8 +22,13 @@ public class InterfazRemotaImpl extends UnicastRemoteObject implements InterfazR
 
         Resultado resultado = new Resultado();
 
-        for (int i = 0; i < numHilos; i+=1){
-            hilos[i] = new Thread(new Calculo(resultado, numPuntos/numHilos));
+        for (int i = 0; i < numHilos; i += 1) {
+            long numPuntosHilo = numPuntos / numHilos;
+            //El último hilo se lleva el resto
+            if (i == numHilos - 1) {
+                numPuntosHilo += numPuntos % numHilos; 
+            }
+            hilos[i] = new Thread(new Calculo(resultado, numPuntosHilo));
             hilos[i].start();
         }
 
