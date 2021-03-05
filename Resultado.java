@@ -5,8 +5,8 @@ public class Resultado {
         this.num = 0L;
     }
 
-    public synchronized void encontrado(){
-        this.num += 1;
+    public synchronized void add(long ptosValidos){
+        this.num += ptosValidos;
     }
 
     public long getNum() {

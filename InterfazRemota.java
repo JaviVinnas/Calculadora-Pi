@@ -12,13 +12,13 @@ public interface InterfazRemota extends Remote {
      */
     public String sayHello(String name) throws java.rmi.RemoteException;
 
+
     /**
-     * calcula el porcentaje de puntos que caen en una circunferencia de radio 1
-     * 
-     * @param numPuntos número de puntos a evaluar
-     * @return cantidad de puntos de los generados que caen en una circunferencia de
-     *         radio 1
+     * devuelve el número de puntos que cumplen la desigualdad de los generados
+     * @param numPuntos cantidad de puntos a verificar
+     * @return los puntos que cumplen la desigualdad
+     * @throws java.rmi.RemoteException excepción remota
      */
-    public long puntosQueCumplenDesigualdad(long numPuntos, int numHilos) throws java.rmi.RemoteException;
+    public long puntosQueCumplenDesigualdad(long numPuntos) throws java.rmi.RemoteException;
 
 }

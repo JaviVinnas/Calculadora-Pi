@@ -1,5 +1,7 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Random;
+import java.util.Date;
 
 public class InterfazRemotaImpl extends UnicastRemoteObject implements InterfazRemota {
 
@@ -16,29 +18,18 @@ public class InterfazRemotaImpl extends UnicastRemoteObject implements InterfazR
     }
 
     
+
     @Override
-    public long puntosQueCumplenDesigualdad(long numPuntos, int numHilos) throws RemoteException {
-        Thread[] hilos = new Thread[numHilos];
-
-        Resultado resultado = new Resultado();
-
-        for (int i = 0; i < numHilos; i += 1) {
-            long numPuntosHilo = numPuntos / numHilos;
-            //El último hilo se lleva el resto
-            if (i == numHilos - 1) {
-                numPuntosHilo += numPuntos % numHilos; 
+    public long puntosQueCumplenDesigualdad(long numPuntos) throws RemoteException {
+        long puntosAceptados = 0L;
+        Random generator = new Random(new Date().getTime());
+        for (int i = 0; i < numPuntos; i += 1) {
+            Punto punto = new Punto(generator);
+            if (punto.getX() * punto.getX() + punto.getY() * punto.getY() <= 1.0) {
+                puntosAceptados += 1;
             }
-            hilos[i] = new Thread(new Calculo(resultado, numPuntosHilo));
-            hilos[i].start();
         }
-
-        try {
-            for (int i = 0; i < numHilos; i += 1) {
-                hilos[i].join();
-            }
-        }catch (InterruptedException ignore){}
-
-        return resultado.getNum();
+        return puntosAceptados;
     }
 
 }
