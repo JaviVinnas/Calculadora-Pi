@@ -5,7 +5,7 @@ public interface InterfazRemota extends Remote {
 
     /**
      * Método que añade un hola al nombre que se le pase por argumentos
-     * 
+     * actúa como comprobación
      * @param name nombre en formato string
      * @return Cadena modificada
      * @throws java.rmi.RemoteException excepciones remotas que pudieran surgir
